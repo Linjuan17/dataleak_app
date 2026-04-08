@@ -45,3 +45,5 @@ pyinstaller -D -w launcher.py ^
 下载 Inno Setup，打开 Inno Setup：File → Open → installer.iss → Build  
 输出：output\DataLeakDetector_Setup.exe  
 这个有安装引导  
+
+封装后的软件包太大了传不上来，大家自己在本地封装一下吧
