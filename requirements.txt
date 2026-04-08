@@ -1,0 +1,24 @@
+# Core dependencies
+neo4j>=5.0.0
+openai>=1.0.0
+python-dotenv>=1.0.0
+
+# Deep Learning & OCR
+torch>=2.0.0
+torchvision>=0.15.0
+easyocr>=1.7.0
+opencv-python>=4.8.0
+
+# LangChain & AI
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-core>=0.1.0
+langgraph>=0.0.20
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Web & API
+fastapi>=0.100.0
+uvicorn>=0.23.0
