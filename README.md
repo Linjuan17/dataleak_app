@@ -16,7 +16,11 @@ pip install -r ../requirements.txt
 4、运行main.py  
 python main_app.py
 
-5、步骤4运行成功后进入软件封装环节，所有代码上的更改都要在这一步之前完成，如果封装后还有更改要再次进行封装
+5、步骤4运行成功后进入软件封装环节，所有代码上的更改都要在这一步之前完成，如果封装后还有更改要再次进行封装   
+清理封裝包：  
+rmdir /s /q build
+rmdir /s /q dist
+del *.spec
 
 6、安装打包工具  
 pip install pyinstaller
