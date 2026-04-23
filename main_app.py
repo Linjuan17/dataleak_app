@@ -4,6 +4,27 @@ import subprocess
 import os
 import sys
 import time
+import requests
+import time
+#日志接口
+logger = None
+report_callback = None
+
+
+def set_logger(func):
+    global logger
+    logger = func
+
+
+def set_report_callback(func):
+    global report_callback
+    report_callback = func
+
+dashboard_callback = None
+
+def set_dashboard_callback(cb):
+    global dashboard_callback
+    dashboard_callback = cb
 
 # ================= 路径 =================
 def get_base_dir():
@@ -48,23 +69,25 @@ def get_latest_session():
 # ================= 启动监控 =================
 import requests
 
+
 def start_monitor():
     global server_process
 
-    # 启动后端
     server_process = subprocess.Popen(
         [get_python(), "web_server.py"],
         cwd=os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor")
     )
+    for _ in range(10):
+        try:
+            r = requests.post("http://127.0.0.1:5000/api/start", timeout=1)
+            if logger:
+                logger("✅ 监控已启动")
+            return
+        except:
+            time.sleep(0.5)
 
-    time.sleep(3)  # 等Flask启动
-
-    try:
-        r = requests.post("http://127.0.0.1:5000/api/start")
-        print(r.text)
-        messagebox.showinfo("提示", "监控已真正启动")
-    except:
-        messagebox.showerror("错误", "启动失败（可能没管理员权限）")
+    if logger:
+        logger("❌ 启动失败")
 
 
 # ================= 停止监控 =================
@@ -72,78 +95,97 @@ def stop_monitor():
     global current_session
 
     try:
-        r = requests.post("http://127.0.0.1:5000/api/stop")
-        print(r.text)
-    except:
-        messagebox.showerror("错误", "停止失败")
+        if logger:
+            logger("🛑 正在停止监控...")
+
+        r = requests.post("http://127.0.0.1:5000/api/stop", timeout=3)
+
+    except Exception as e:
+        if logger:
+            logger(f"❌ 停止失败: {str(e)}")
         return
 
-    # 等待录制写盘
-    time.sleep(5)
+    # ⭐ 等待 session 生成（核心修复）
+    import time
 
-    # 获取session
-    session = get_latest_session()
+    session = None
+    for i in range(10):  # 最多等10秒
+        time.sleep(1)
+        session = get_latest_session()
+
+        if session:
+            break
 
     if not session:
-        messagebox.showerror("错误", "没有生成录制数据（权限问题）")
+        if logger:
+            logger("❌ 等待超时，未生成录制数据")
         return
 
     current_session = session
 
-    print(f"当前session: {session}")
-
-    messagebox.showinfo("提示", f"录制完成\n{session}")
+    if logger:
+        logger(f"✅ session设置成功: {session}")
 
 # ================= 数据分析 =================
 def analyze():
-    if not current_session:
-        messagebox.showerror("错误", "请先录制")
+    print("=== analyze 被调用 ===")
+
+    session = get_latest_session()   # ⭐ 每次直接从磁盘拿
+
+    print("自动获取session:", session)
+
+    if not session:
+        if logger:
+            logger("❌ 没有录制数据，请先监控")
         return
 
     try:
-        progress.start()
+        import shutil
 
-        # ⭐生成record_id
-        session_name = os.path.basename(current_session)
+        session_name = os.path.basename(session)
         record_id = session_name.replace("session_", "record_")
 
-        print(f"分析: {record_id}")
+        dst_root = os.path.join(RISK_DIR, "recordings","stage1")
+        os.makedirs(dst_root, exist_ok=True)
 
-        # ⭐复制到RiskHunter
-        dst_base = os.path.join(RISK_DIR, "recordings", record_id)
+        dst_base = os.path.join(dst_root, record_id)
 
         if os.path.exists(dst_base):
-            import shutil
             shutil.rmtree(dst_base)
 
-        import shutil
-        shutil.copytree(
-            current_session,
-            os.path.join(dst_base, session_name)
-        )
+        dst_final = os.path.join(dst_base, session_name)
 
-        # ⭐执行分析
+        print("复制:", session, "→", dst_final)
+
+        shutil.copytree(session, dst_final)
+
+        if logger:
+            logger("📁 数据复制完成")
+
         result = subprocess.run(
             [get_python(), "run_upload_detection.py", record_id],
             cwd=RISK_DIR
         )
 
-        progress.stop()
-
         if result.returncode != 0:
-            messagebox.showerror("错误", "分析失败")
+            if logger:
+                logger("❌ 分析失败")
             return
 
-        messagebox.showinfo("完成", "分析完成")
+        if logger:
+            logger("✅ 分析完成")
+
+        show_report()
 
     except Exception as e:
-        progress.stop()
-        messagebox.showerror("错误", str(e))
-
+        print("异常:", e)
+        if logger:
+            logger(str(e))
 # ================= 查看报告 =================
 def show_report():
     if not current_session:
-        messagebox.showwarning("提示", "请先分析")
+        if logger:
+            logger("❌ 请先分析")
         return
 
     session_name = os.path.basename(current_session)
@@ -152,7 +194,8 @@ def show_report():
     base = os.path.join(RISK_DIR, "recordings", record_id, "results")
 
     if not os.path.exists(base):
-        messagebox.showerror("错误", "没有结果")
+        if logger:
+            logger("❌ 没有结果")
         return
 
     subdirs = sorted(os.listdir(base))
@@ -162,29 +205,14 @@ def show_report():
     with open(report, "r", encoding="utf-8") as f:
         content = f.read()
 
-    win = tk.Toplevel()
-    win.title("分析报告")
+    if report_callback:
+        report_callback(content)
 
-    text = scrolledtext.ScrolledText(win, width=100, height=30)
-    text.pack()
-    text.insert(tk.END, content)
 
-# ================= UI =================
-app = tk.Tk()
-app.title("DataLeakDetector Pro")
-app.geometry("420x320")
+def main():
+    import UI
+    UI.run()
 
-tk.Label(app, text="数据泄露检测系统", font=("Arial", 16)).pack(pady=15)
 
-tk.Button(app, text="▶ 启动监控", width=35, command=start_monitor).pack(pady=5)
-tk.Button(app, text="■ 结束监控", width=35, command=stop_monitor).pack(pady=5)
-
-tk.Button(app, text="📊 数据分析", width=35, command=analyze).pack(pady=5)
-tk.Button(app, text="📄 分析报告", width=35, command=show_report).pack(pady=5)
-
-progress = ttk.Progressbar(app, mode='indeterminate')
-progress.pack(pady=10, fill='x', padx=20)
-
-tk.Button(app, text="退出", width=35, command=app.quit).pack(pady=10)
-
-app.mainloop()
+if __name__ == "__main__":
+    main()
