@@ -2,8 +2,9 @@ launcher.py放在DataLeakDetector\
 main_app.py放在DataLeakDetector\
 requirements.txt放在DataLeakDetector\
 installer.iss放在DataLeakDetector\
-其他两个文件是有更改的部分，直接复制粘贴修改就行，路径：DataLeakDetector\3-RiskHunter\run_upload_detection.py & DataLeakDetector\ScreenMonitor\winows_monitor\web_server.py
-
+path_utils.py放在DataLeakDetector\
+assets放在DataLeakDetector\
+修改DataLeakDetector\3-RiskHunter\run_upload_detection.py
 运行步骤：
 1、以管理员身份运行CMD
 
@@ -29,18 +30,18 @@ pip install pyinstaller
 pip install flask flask-cors requests langgraph
 
 8、PyInstaller 打包（要在管理员CMD运行）  
-pyinstaller -D -w launcher.py ^  
---name DataLeakDetector ^  
---uac-admin ^  
---add-data "1-FrameAnalyzer;1-FrameAnalyzer" ^  
---add-data "2-FileTracker;2-FileTracker" ^  
+pyinstaller launcher.py ^  
+--onefile ^  
+--noconsole ^  
+--uac-admin ^   
+--hidden-import sip ^   
+--name DataLeakDetector ^   
+--add-data "ScreenMonitor;ScreenMonitor" ^   
+--add-data "1-FrameAnalyzer;1-FrameAnalyzer" ^    
+--add-data "2-FileTracker;2-FileTracker" ^   
 --add-data "3-RiskHunter;3-RiskHunter" ^  
---add-data "4-ThreatDetector;4-ThreatDetector" ^  
---add-data "ScreenMonitor;ScreenMonitor" ^  
---hidden-import flask ^  
---hidden-import flask_cors ^  
---hidden-import requests ^  
---hidden-import langgraph  
+--add-data "4-ThreatDetector;4-ThreatDetector" ^   
+--add-data "icons;icons"   
 
 9、运行打包结果  
 进入dist\DataLeakDetector\，双击DataLeakDetector.exe运行，会弹出管理员权限运行
