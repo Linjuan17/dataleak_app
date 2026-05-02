@@ -6,6 +6,7 @@ import sys
 import time
 import requests
 import time
+from path_utils import get_base_dir, get_data_dir
 #日志接口
 logger = None
 report_callback = None
@@ -35,7 +36,8 @@ def get_base_dir():
 
 BASE_DIR = get_base_dir()
 
-SCREEN_RECORD = os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor", "recordings")
+#SCREEN_RECORD = os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor", "recordings")
+SCREEN_RECORD = os.path.join(get_data_dir(), "recordings")
 RISK_DIR = os.path.join(BASE_DIR, "3-RiskHunter")
 
 server_process = None
@@ -72,11 +74,16 @@ import requests
 
 def start_monitor():
     global server_process
+    server_path = os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor", "web_server.py")
 
     server_process = subprocess.Popen(
-        [get_python(), "web_server.py"],
-        cwd=os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor")
+        [get_python(), server_path]
     )
+
+    #server_process = subprocess.Popen(
+    #    [get_python(), "web_server.py"],
+    #    cwd=os.path.join(BASE_DIR, "ScreenMonitor", "winows_monitor")
+    #)
     for _ in range(10):
         try:
             r = requests.post("http://127.0.0.1:5000/api/start", timeout=1)
@@ -145,7 +152,8 @@ def analyze():
         session_name = os.path.basename(session)
         record_id = session_name.replace("session_", "record_")
 
-        dst_root = os.path.join(RISK_DIR, "recordings","stage1")
+        #dst_root = os.path.join(RISK_DIR, "recordings","stage1")
+        dst_root = os.path.join(get_data_dir(), "risk_stage1")
         os.makedirs(dst_root, exist_ok=True)
 
         dst_base = os.path.join(dst_root, record_id)
@@ -162,10 +170,16 @@ def analyze():
         if logger:
             logger("📁 数据复制完成")
 
+        #result = subprocess.run(
+        #    [get_python(), "run_upload_detection.py", record_id],
+        #    cwd=RISK_DIR
+        #)
+        script_path = os.path.join(RISK_DIR, "run_upload_detection.py")
+
         result = subprocess.run(
-            [get_python(), "run_upload_detection.py", record_id],
-            cwd=RISK_DIR
+            [get_python(), script_path, record_id]
         )
+
 
         if result.returncode != 0:
             if logger:
@@ -191,7 +205,7 @@ def show_report():
     session_name = os.path.basename(current_session)
     record_id = session_name.replace("session_", "record_")
 
-    base = os.path.join(RISK_DIR, "recordings", record_id, "results")
+    base = os.path.join(get_data_dir(), "recordings", record_id, "results")
 
     if not os.path.exists(base):
         if logger:
