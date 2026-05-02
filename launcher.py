@@ -10,3 +10,6 @@ else:
 
 # 启动主程序
 from main_app import app
+
+if __name__ == "__main__":
+    main()
