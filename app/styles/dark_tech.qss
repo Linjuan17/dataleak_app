@@ -1,0 +1,764 @@
+/*!
+ * 深色科技风QSS样式表
+ * 数据泄露检测人员管理系统
+ */
+
+ /* ==================== 全局样式 ==================== */
+
+QMainWindow, QWidget {
+    background-color: #0A0E17;
+    color: #E8ECF1;
+    font-family: "Microsoft YaHei, PingFang SC, SimHei, sans-serif";
+}
+
+ /* ==================== 滚动条样式 ==================== */
+
+QScrollBar:vertical {
+    background-color: rgba(17, 25, 40, 0.8);
+    width: 8px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgba(0, 212, 255, 0.3);
+    border-radius: 4px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: rgba(0, 212, 255, 0.5);
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollBar:horizontal {
+    background-color: rgba(17, 25, 40, 0.8);
+    height: 8px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: rgba(0, 212, 255, 0.3);
+    border-radius: 4px;
+    min-width: 30px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: rgba(0, 212, 255, 0.5);
+}
+
+ /* ==================== 左侧边栏 ==================== */
+
+#sidebar {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #0D1321, stop:1 #0A0F1C);
+    border-right: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+#sidebar_logo {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 10px;
+}
+
+#sidebar_nav_item {
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+}
+
+#sidebar_nav_item:hover {
+    background: rgba(0, 212, 255, 0.08);
+}
+
+#sidebar_nav_item:checked {
+    background: rgba(0, 212, 255, 0.12);
+}
+
+#sidebar_nav_item:selected {
+    background: rgba(0, 212, 255, 0.15);
+}
+
+ /* ==================== 顶部导航栏 ==================== */
+
+#topbar {
+    background: rgba(13, 19, 33, 0.95);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+#topbar_title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #E8ECF1;
+    letter-spacing: 0.5px;
+}
+
+ /* 搜索框 */
+#search_input {
+    background: rgba(17, 25, 40, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 20px;
+    padding: 8px 16px 8px 36px;
+    font-size: 14px;
+    color: #E8ECF1;
+    selection-background-color: rgba(0, 212, 255, 0.3);
+}
+
+#search_input:focus {
+    border: 1px solid #00D4FF;
+    background: rgba(17, 25, 40, 1);
+}
+
+#search_input::placeholder {
+    color: #8B95A5;
+}
+
+ /* 图标按钮 */
+#icon_button {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+}
+
+#icon_button:hover {
+    background: rgba(0, 212, 255, 0.08);
+}
+
+ /* 用户头像 */
+#user_avatar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 50%;
+    color: #0A0E17;
+    font-weight: 600;
+}
+
+ /* ==================== 分类标签切换 ==================== */
+
+#category_tab {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #8B95A5;
+}
+
+#category_tab:hover {
+    color: #00D4FF;
+}
+
+#category_tab:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #0099CC);
+    color: #0A0E17;
+    font-weight: 600;
+}
+
+ /* ==================== 卡片通用样式 ==================== */
+
+#card {
+    background: rgba(17, 25, 40, 0.85);
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    border-radius: 16px;
+}
+
+#card:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+}
+
+ /* ==================== 组别卡片 ==================== */
+
+#group_card {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    border-left: 4px solid transparent;
+    padding: 16px;
+}
+
+#group_card:hover {
+    border-color: rgba(0, 212, 255, 0.15);
+    border-left-color: inherit;
+}
+
+#group_card_status_danger {
+    border-left-color: #FF4757;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(255, 71, 87, 0.08), stop:1 rgba(15, 23, 42, 0.6));
+}
+
+#group_card_status_safe {
+    border-left-color: #00D68F;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(0, 214, 143, 0.08), stop:1 rgba(15, 23, 42, 0.6));
+}
+
+#group_card_status_warning {
+    border-left-color: #FFA502;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(255, 165, 2, 0.08), stop:1 rgba(15, 23, 42, 0.6));
+}
+
+#group_name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#group_count {
+    font-size: 12px;
+    color: #8B95A5;
+    background: rgba(0, 212, 255, 0.08);
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+ /* ==================== 员工卡片 ==================== */
+
+#employee_card {
+    background: rgba(17, 25, 40, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    padding: 16px;
+}
+
+#employee_card:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+    background: rgba(17, 25, 40, 0.95);
+}
+
+#employee_card_monitored_risk {
+    border-left: 4px solid #FF4757;
+}
+
+#employee_card_monitored_safe {
+    border-left: 4px solid #00D68F;
+}
+
+#employee_avatar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 50%;
+    color: #0A0E17;
+    font-weight: 600;
+}
+
+#employee_name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#employee_position {
+    font-size: 12px;
+    color: #8B95A5;
+}
+
+ /* ==================== 徽章 ==================== */
+
+#badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+#badge_danger {
+    background: rgba(255, 71, 87, 0.15);
+    color: #FF4757;
+    border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+#badge_safe {
+    background: rgba(0, 214, 143, 0.15);
+    color: #00D68F;
+    border: 1px solid rgba(0, 214, 143, 0.2);
+}
+
+#badge_monitoring {
+    background: rgba(0, 212, 255, 0.15);
+    color: #00D4FF;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+#badge_warning {
+    background: rgba(255, 165, 2, 0.15);
+    color: #FFA502;
+    border: 1px solid rgba(255, 165, 2, 0.2);
+}
+
+ /* ==================== 按钮 ==================== */
+
+ /* 普通按钮 */
+#btn {
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #8B95A5;
+}
+
+#btn:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-color: #00D4FF;
+    color: #00D4FF;
+}
+
+ /* 主按钮 */
+#btn_primary {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0A0E17;
+}
+
+#btn_primary:hover {
+    /* 发光效果 */
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+ /* 日期选择按钮 */
+#date_btn {
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+#date_btn:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-color: #00D4FF;
+}
+
+ /* 筛选按钮 */
+#filter_btn {
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #8B95A5;
+}
+
+#filter_btn:hover {
+    border-color: #00D4FF;
+    color: #00D4FF;
+}
+
+#filter_btn:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #0099CC);
+    border-color: transparent;
+    color: #0A0E17;
+}
+
+ /* ==================== 输入框 ==================== */
+
+QLineEdit {
+    background: rgba(17, 25, 40, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #E8ECF1;
+}
+
+QLineEdit:focus {
+    border: 1px solid #00D4FF;
+    background: rgba(17, 25, 40, 1);
+}
+
+QLineEdit::placeholder {
+    color: #8B95A5;
+}
+
+ /* 月份选择器 */
+#month_input {
+    background: rgba(17, 25, 40, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#month_input:focus {
+    border: 1px solid #00D4FF;
+}
+
+ /* ==================== 看板列 ==================== */
+
+#kanban_column {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 212, 255, 0.12);
+}
+
+#kanban_column_header {
+    border-bottom: 2px solid #00D4FF;
+    padding-bottom: 12px;
+}
+
+#kanban_column_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#kanban_column_count {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #0099CC);
+    color: #0A0E17;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+ /* ==================== 树状图节点 ==================== */
+
+#tree_node {
+    background: rgba(17, 25, 40, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    padding: 16px;
+}
+
+#tree_node:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+}
+
+#tree_node_monitored_risk {
+    border: 2px solid #FF4757;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 rgba(255, 71, 87, 0.08), stop:1 rgba(17, 25, 40, 0.85));
+}
+
+#tree_node_monitored_safe {
+    border: 2px solid #00D68F;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 rgba(0, 214, 143, 0.08), stop:1 rgba(17, 25, 40, 0.85));
+}
+
+#tree_node_name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#tree_node_position {
+    font-size: 12px;
+    color: #8B95A5;
+}
+
+#tree_node_avatar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 50%;
+    color: #0A0E17;
+    font-weight: 600;
+}
+
+ /* ==================== 监控开关 ==================== */
+
+#monitor_switch {
+    background: rgba(0, 212, 255, 0.15);
+    border-radius: 11px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    min-width: 40px;
+    min-height: 22px;
+}
+
+#monitor_switch:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-color: transparent;
+}
+
+#monitor_switch::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background: white;
+    border: none;
+    margin: 1px;
+}
+
+#monitor_switch:checked::indicator {
+    margin-left: 19px;
+}
+
+ /* ==================== 监控记录列表 ==================== */
+
+#record_item {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    padding: 16px;
+}
+
+#record_item:hover {
+    background: rgba(0, 212, 255, 0.05);
+    border-color: rgba(0, 212, 255, 0.15);
+}
+
+#record_level_high {
+    background: #FF4757;
+    border-radius: 4px;
+    min-width: 8px;
+}
+
+#record_level_medium {
+    background: #FFA502;
+    border-radius: 4px;
+    min-width: 8px;
+}
+
+#record_level_low {
+    background: #00D68F;
+    border-radius: 4px;
+    min-width: 8px;
+}
+
+#record_time {
+    font-size: 12px;
+    color: #8B95A5;
+}
+
+#record_title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8ECF1;
+}
+
+#record_desc {
+    font-size: 12px;
+    color: #8B95A5;
+}
+
+ /* ==================== 状态指示点 ==================== */
+
+#status_dot {
+    border-radius: 50%;
+    min-width: 8px;
+    max-width: 8px;
+    min-height: 8px;
+    max-height: 8px;
+}
+
+#status_dot_danger {
+    background: #FF4757;
+}
+
+#status_dot_safe {
+    background: #00D68F;
+}
+
+#status_dot_warning {
+    background: #FFA502;
+}
+
+#status_dot_primary {
+    background: #00D4FF;
+}
+
+ /* ==================== 统计卡片 ==================== */
+
+#stat_card {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    padding: 16px;
+    text-align: center;
+}
+
+#stat_value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #00D4FF;
+}
+
+#stat_label {
+    font-size: 12px;
+    color: #8B95A5;
+    margin-top: 4px;
+}
+
+ /* ==================== 详情页三栏布局 ==================== */
+
+#detail_panel {
+    background: rgba(17, 25, 40, 0.85);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 212, 255, 0.12);
+}
+
+ /* 视频区域占位 */
+#video_placeholder {
+    background: #0D1117;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    min-height: 300px;
+}
+
+ /* 风险评分圆环 */
+#risk_circle {
+    border-radius: 50%;
+    border: 6px solid;
+}
+
+ /* 时间线 */
+#timeline_dot {
+    border-radius: 50%;
+    border: 3px solid #0A0E17;
+}
+
+#timeline_dot_high {
+    background: #FF4757;
+}
+
+#timeline_dot_medium {
+    background: #FFA502;
+}
+
+#timeline_dot_low {
+    background: #00D68F;
+}
+
+ /* ==================== 标签页 ==================== */
+
+QTabWidget::pane {
+    background: transparent;
+    border: none;
+}
+
+QTabBar::tab {
+    background: transparent;
+    color: #8B95A5;
+    padding: 8px 16px;
+    border: none;
+}
+
+QTabBar::tab:selected {
+    color: #00D4FF;
+}
+
+QTabBar::tab:hover {
+    color: #00D4FF;
+}
+
+ /* ==================== 表格 ==================== */
+
+QTableWidget {
+    background: transparent;
+    border: none;
+    gridline-color: rgba(0, 212, 255, 0.1);
+    color: #E8ECF1;
+}
+
+QTableWidget::item {
+    background: rgba(17, 25, 40, 0.5);
+    padding: 8px;
+}
+
+QTableWidget::item:selected {
+    background: rgba(0, 212, 255, 0.15);
+}
+
+QHeaderView::section {
+    background: rgba(17, 25, 40, 0.8);
+    color: #8B95A5;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+ /* ==================== 工具提示 ==================== */
+
+QToolTip {
+    background: #1A2235;
+    color: #E8ECF1;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+ /* ==================== 菜单 ==================== */
+
+QMenu {
+    background: #131B2E;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+QMenu::item {
+    background: transparent;
+    color: #E8ECF1;
+    padding: 8px 20px;
+    border-radius: 4px;
+}
+
+QMenu::item:selected {
+    background: rgba(0, 212, 255, 0.12);
+}
+
+QMenu::separator {
+    height: 1px;
+    background: rgba(0, 212, 255, 0.1);
+    margin: 4px 0;
+}
+
+ /* ==================== 进度条 ==================== */
+
+QProgressBar {
+    background: rgba(0, 212, 255, 0.15);
+    border: none;
+    border-radius: 3px;
+    height: 6px;
+}
+
+QProgressBar::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 3px;
+}
+
+ /* ==================== 滑块 ==================== */
+
+QSlider::groove:horizontal {
+    background: rgba(0, 212, 255, 0.15);
+    height: 4px;
+    border-radius: 2px;
+}
+
+QSlider::handle:horizontal {
+    background: #00D4FF;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: -4px 0;
+}
+
+QSlider::sub-page:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #00D4FF, stop:1 #00FFA3);
+    border-radius: 2px;
+}
