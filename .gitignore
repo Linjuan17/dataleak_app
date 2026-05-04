@@ -1,0 +1,11 @@
+__pycache__/ 
+.venv/ 
+build/ 
+dist/ 
+*.spec 
+*.exe 
+*.pkg 
+.idea/ 
+analysis_history/ 
+*.mp4 
+*.zip 
